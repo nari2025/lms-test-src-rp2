@@ -26,7 +26,7 @@ import jp.co.sss.lms.util.AttendanceUtil;
 import jp.co.sss.lms.util.Constants;
 import jp.co.sss.lms.util.LoginUserUtil;
 
-//初回の疎通確認コミット
+//初回の疎通
 /**
  * 勤怠管理コントローラ
  * 
