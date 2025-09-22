@@ -1,6 +1,9 @@
 package jp.co.sss.lms.ct.f01_login1;
 
 import static jp.co.sss.lms.ct.util.WebDriverUtils.*;
+import static org.junit.Assert.*;
+
+import java.net.MalformedURLException;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -9,6 +12,11 @@ import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
+
+import jp.co.sss.lms.ct.util.WebDriverUtils;
 
 /**
  * 結合テスト ログイン機能①
@@ -35,14 +43,50 @@ public class Case02 {
 	@Order(1)
 	@DisplayName("テスト01 トップページURLでアクセス")
 	void test01() {
-		// TODO ここに追加
+		// 指定のURLの画面を開く
+		goTo("http://localhost:8080/lms/");
+		//遷移したURLが正しいか確認
+		String currentUrl = WebDriverUtils.webDriver.getCurrentUrl();
+		assertEquals("http://localhost:8080/lms/", currentUrl);
+		System.out.println("遷移先のURL: " + currentUrl);
+		//タイトルが正しいか確認
+		String pageTitleString = WebDriverUtils.webDriver.getTitle();
+		assertEquals("ログイン | LMS", pageTitleString);
+		System.out.println(pageTitleString);
+
+		// ページのキャプチャを取得する
+		getEvidence(new Object() {
+		});
 	}
 
 	@Test
 	@Order(2)
 	@DisplayName("テスト02 DBに登録されていないユーザーでログイン")
-	void test02() {
-		// TODO ここに追加
+	void test02() throws MalformedURLException {
+		final WebElement loginId = WebDriverUtils.webDriver.findElement(By.id("loginId"));
+		final WebElement password = WebDriverUtils.webDriver.findElement(By.id("password"));
+		//DBに登録されていないログインIDを入力し、TABキーを押下
+		loginId.clear();
+		loginId.sendKeys("TestUser001");
+		loginId.sendKeys(Keys.TAB);
+		//DBに登録されていないパスワードを入力し、Enterキーを押下
+		password.clear();
+		password.sendKeys("TestUser001");
+		password.sendKeys(Keys.ENTER);
+		// 遷移先のURLを取得し、正しいか確認
+		String currentUrl = WebDriverUtils.webDriver.getCurrentUrl();
+		System.out.println("遷移先のURL: " + currentUrl);
+		assertTrue(currentUrl.startsWith("http://localhost:8080/lms/login"));
+		//エラーメッセージが正しいか確認
+		final WebElement errorMsg = WebDriverUtils.webDriver.findElement(By.cssSelector(".help-inline.error"));
+		assertEquals("* ログインに失敗しました。", errorMsg.getText());
+		System.out.println(errorMsg.getText());
+		//ログインIDがテキストボックスに残っているか確認
+		final WebElement currentLoginId = WebDriverUtils.webDriver.findElement(By.id("loginId"));
+		assertEquals("TestUser001", currentLoginId.getAttribute("value"));
+		System.out.println(currentLoginId.getText());
+		// ページのキャプチャを取得する
+		getEvidence(new Object() {
+		});
 	}
-
 }
