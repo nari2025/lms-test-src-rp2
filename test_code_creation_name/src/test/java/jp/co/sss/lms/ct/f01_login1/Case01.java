@@ -1,6 +1,9 @@
 package jp.co.sss.lms.ct.f01_login1;
 
 import static jp.co.sss.lms.ct.util.WebDriverUtils.*;
+import static org.junit.Assert.*;
+
+import java.io.IOException;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -9,6 +12,8 @@ import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+
+import jp.co.sss.lms.ct.util.WebDriverUtils;
 
 /**
  * 結合テスト ログイン機能①
@@ -34,8 +39,20 @@ public class Case01 {
 	@Test
 	@Order(1)
 	@DisplayName("テスト01 トップページURLでアクセス")
-	void test01() {
-		// TODO ここに追加
-	}
+	void test01() throws IOException {
+		// 指定のURLの画面を開く
+		goTo("http://localhost:8080/lms/");
+		//遷移したURLが正しいか確認
+		String currentUrl = WebDriverUtils.webDriver.getCurrentUrl();
+		assertEquals("http://localhost:8080/lms/", currentUrl);
+		System.out.println("遷移先のURL: " + currentUrl);
+		//タイトルが正しいか確認
+		String pageTitleString = WebDriverUtils.webDriver.getTitle();
+		assertEquals("ログイン | LMS", pageTitleString);
+		System.out.println(pageTitleString);
 
+		// ページのキャプチャを取得する
+		getEvidence(new Object() {
+		});
+	}
 }
