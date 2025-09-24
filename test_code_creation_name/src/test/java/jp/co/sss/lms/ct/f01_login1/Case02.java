@@ -48,11 +48,9 @@ public class Case02 {
 		//遷移したURLが正しいか確認
 		String currentUrl = WebDriverUtils.webDriver.getCurrentUrl();
 		assertEquals("http://localhost:8080/lms/", currentUrl);
-		System.out.println("遷移先のURL: " + currentUrl);
 		//タイトルが正しいか確認
 		String pageTitleString = WebDriverUtils.webDriver.getTitle();
 		assertEquals("ログイン | LMS", pageTitleString);
-		System.out.println(pageTitleString);
 
 		// ページのキャプチャを取得する
 		getEvidence(new Object() {
@@ -75,16 +73,13 @@ public class Case02 {
 		password.sendKeys(Keys.ENTER);
 		// 遷移先のURLを取得し、正しいか確認
 		String currentUrl = WebDriverUtils.webDriver.getCurrentUrl();
-		System.out.println("遷移先のURL: " + currentUrl);
 		assertTrue(currentUrl.startsWith("http://localhost:8080/lms/login"));
 		//エラーメッセージが正しいか確認
 		final WebElement errorMsg = WebDriverUtils.webDriver.findElement(By.cssSelector(".help-inline.error"));
 		assertEquals("* ログインに失敗しました。", errorMsg.getText());
-		System.out.println(errorMsg.getText());
 		//ログインIDがテキストボックスに残っているか確認
 		final WebElement currentLoginId = WebDriverUtils.webDriver.findElement(By.id("loginId"));
 		assertEquals("TestUser001", currentLoginId.getAttribute("value"));
-		System.out.println(currentLoginId.getText());
 		// ページのキャプチャを取得する
 		getEvidence(new Object() {
 		});

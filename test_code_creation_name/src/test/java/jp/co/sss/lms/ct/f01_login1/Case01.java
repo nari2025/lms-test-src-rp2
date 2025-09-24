@@ -45,11 +45,9 @@ public class Case01 {
 		//遷移したURLが正しいか確認
 		String currentUrl = WebDriverUtils.webDriver.getCurrentUrl();
 		assertEquals("http://localhost:8080/lms/", currentUrl);
-		System.out.println("遷移先のURL: " + currentUrl);
 		//タイトルが正しいか確認
 		String pageTitleString = WebDriverUtils.webDriver.getTitle();
 		assertEquals("ログイン | LMS", pageTitleString);
-		System.out.println(pageTitleString);
 
 		// ページのキャプチャを取得する
 		getEvidence(new Object() {

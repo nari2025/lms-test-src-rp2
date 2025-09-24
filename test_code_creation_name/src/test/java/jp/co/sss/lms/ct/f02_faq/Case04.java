@@ -48,12 +48,9 @@ public class Case04 {
 		//遷移したURLが正しいか確認
 		String currentUrl = WebDriverUtils.webDriver.getCurrentUrl();
 		assertEquals("http://localhost:8080/lms/", currentUrl);
-		System.out.println("遷移先のURL: " + currentUrl);
 		//タイトルが正しいか確認
 		String pageTitleString = WebDriverUtils.webDriver.getTitle();
 		assertEquals("ログイン | LMS", pageTitleString);
-		System.out.println(pageTitleString);
-
 		// ページのキャプチャを取得する
 		getEvidence(new Object() {
 		});
@@ -73,17 +70,14 @@ public class Case04 {
 		password.clear();
 		password.sendKeys("testTest1234");
 		password.sendKeys(Keys.ENTER);
-
 		// 遷移先のURLを取得し、正しいか確認
 		String currentUrl = WebDriverUtils.webDriver.getCurrentUrl();
-		System.out.println("遷移先のURL: " + currentUrl);
 		assertTrue(currentUrl.startsWith("http://localhost:8080/lms/course/detail"));
 		pageLoadTimeout(10);
 		//ユーザー名が表示されているか確認
 		WebElement smallElement = WebDriverUtils.webDriver.findElement(By.tagName("small"));
 		String userName = smallElement.getText();
 		assertEquals("ようこそ受講生ＡＡ１さん", userName);
-		System.out.println(userName);
 		// ページのキャプチャを取得する
 		getEvidence(new Object() {
 		});
@@ -102,12 +96,10 @@ public class Case04 {
 		helpLink.click();
 		//遷移先のURLを確認
 		String currentUrl = WebDriverUtils.webDriver.getCurrentUrl();
-		System.out.println("遷移先のURL: " + currentUrl);
 		assertTrue(currentUrl.startsWith("http://localhost:8080/lms/help"));
 		//タイトルが正しいか確認
 		String pageTitleString = WebDriverUtils.webDriver.getTitle();
 		assertEquals("ヘルプ | LMS", pageTitleString);
-		System.out.println(pageTitleString);
 		// ページのキャプチャを取得する
 		getEvidence(new Object() {
 		});
@@ -127,12 +119,10 @@ public class Case04 {
 		WebDriverUtils.webDriver.switchTo().window(tabs.get(1)); // Switch to the new tab
 		//遷移先のURLを確認
 		String currentUrl = WebDriverUtils.webDriver.getCurrentUrl();
-		System.out.println("遷移先のURL: " + currentUrl);
 		assertTrue(currentUrl.startsWith("http://localhost:8080/lms/faq"));
 		//タイトルが正しいか確認
 		String pageTitleString = WebDriverUtils.webDriver.getTitle();
 		assertEquals("よくある質問 | LMS", pageTitleString);
-		System.out.println(pageTitleString);
 		// ページのキャプチャを取得する
 		getEvidence(new Object() {
 		});
