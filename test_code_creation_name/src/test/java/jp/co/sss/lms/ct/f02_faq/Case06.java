@@ -119,7 +119,7 @@ public class Case06 {
 		//遷移したタブのURLを取得するため、タブでListを作成
 		ArrayList<String> tabs = new ArrayList<String>(WebDriverUtils.webDriver.getWindowHandles());
 		//2つ目のタブを選択
-		WebDriverUtils.webDriver.switchTo().window(tabs.get(1)); // Switch to the new tab
+		WebDriverUtils.webDriver.switchTo().window(tabs.get(1));
 		//遷移先のURLを確認
 		String currentUrl = WebDriverUtils.webDriver.getCurrentUrl();
 		assertTrue(currentUrl.startsWith("http://localhost:8080/lms/faq"));
