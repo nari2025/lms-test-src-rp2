@@ -69,7 +69,7 @@ public class Case03 {
 		loginId.sendKeys(Keys.TAB);
 		//初回ログイン済みのパスワードを入力し、Enterキーを押下
 		password.clear();
-		password.sendKeys("StudentAA011");
+		password.sendKeys("testTest1234");
 		password.sendKeys(Keys.ENTER);
 		// 遷移先のURLを取得し、正しいか確認
 		String currentUrl = WebDriverUtils.webDriver.getCurrentUrl();
