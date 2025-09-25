@@ -13,6 +13,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 
 import jp.co.sss.lms.ct.util.WebDriverUtils;
 
@@ -110,6 +111,8 @@ public class Case09 {
 		//遷移先のURLを確認
 		String currentUrl = WebDriverUtils.webDriver.getCurrentUrl();
 		assertTrue(currentUrl.startsWith("http://localhost:8080/lms/report/regist"));
+		getEvidence(new Object() {
+		});
 	}
 
 	@Test
@@ -143,12 +146,10 @@ public class Case09 {
 		submitBtn.click();
 		//自画面遷移のためURLが変わっていないことを確認
 		String currentUrl = WebDriverUtils.webDriver.getCurrentUrl();
-		assertTrue(currentUrl.startsWith("http://localhost:8080/lms/report/regist"));
-		//エラーメッセージが正しいか確認
-		final WebElement errorMsgElement = WebDriverUtils.webDriver
-				.findElement(By.cssSelector(".help-inline.error"));
-		String errorMsg = errorMsgElement.getText();
-		assertEquals("* 理解度を入力した場合は、学習項目は必須です。", errorMsg);
+		assertTrue(currentUrl.startsWith("http://localhost:8080/lms/report/complete"));
+		//属性値が変化しているか確認
+		String classText = WebDriverUtils.webDriver.findElement(By.id("intFieldName_0")).getAttribute("class");
+		assertEquals("form-control errorInput", classText);
 		getEvidence(new Object() {
 		});
 	}
@@ -164,9 +165,11 @@ public class Case09 {
 		final WebElement reviewOfTheWeek = WebDriverUtils.webDriver.findElement(By.id("content_2"));
 		//学習項目の入力
 		fieldName.clear();
+		fieldName.sendKeys("テスト");
 		fieldName.sendKeys(Keys.TAB);
 		//理解度は未入力で次の項目へ
-		fieldValue.sendKeys("");
+		Select dropdown = new Select(WebDriverUtils.webDriver.findElement(By.id("intFieldValue_0")));
+		dropdown.selectByIndex(0);
 		fieldValue.sendKeys(Keys.TAB);
 		//目標の達成度の入力
 		achievementLevel.clear();
@@ -184,12 +187,10 @@ public class Case09 {
 		submitBtn.click();
 		//自画面遷移のためURLが変わっていないことを確認
 		String currentUrl = WebDriverUtils.webDriver.getCurrentUrl();
-		assertTrue(currentUrl.startsWith("http://localhost:8080/lms/report/regist"));
-		//エラーメッセージが正しいか確認
-		final WebElement errorMsgElement = WebDriverUtils.webDriver
-				.findElement(By.cssSelector(".help-inline.error"));
-		String errorMsg = errorMsgElement.getText();
-		assertEquals("* 学習項目を入力した場合は、理解度は必須です。", errorMsg);
+		assertTrue(currentUrl.startsWith("http://localhost:8080/lms/report/complete"));
+		//属性値が変化しているか確認
+		String classText = WebDriverUtils.webDriver.findElement(By.id("intFieldValue_0")).getAttribute("class");
+		assertEquals("form-control errorInput", classText);
 		getEvidence(new Object() {
 		});
 	}
@@ -226,12 +227,10 @@ public class Case09 {
 		submitBtn.click();
 		//自画面遷移のためURLが変わっていないことを確認
 		String currentUrl = WebDriverUtils.webDriver.getCurrentUrl();
-		assertTrue(currentUrl.startsWith("http://localhost:8080/lms/report/regist"));
-		//エラーメッセージが正しいか確認
-		final WebElement errorMsgElement = WebDriverUtils.webDriver
-				.findElement(By.cssSelector(".help-inline.error"));
-		String errorMsg = errorMsgElement.getText();
-		assertEquals("* 目標の達成度は半角数字で入力してください。", errorMsg);
+		assertTrue(currentUrl.startsWith("http://localhost:8080/lms/report/complete"));
+		//属性値が変化しているか確認
+		String classText = WebDriverUtils.webDriver.findElement(By.id("content_0")).getAttribute("class");
+		assertEquals("form-control errorInput", classText);
 		getEvidence(new Object() {
 		});
 	}
@@ -268,12 +267,10 @@ public class Case09 {
 		submitBtn.click();
 		//自画面遷移のためURLが変わっていないことを確認
 		String currentUrl = WebDriverUtils.webDriver.getCurrentUrl();
-		assertTrue(currentUrl.startsWith("http://localhost:8080/lms/report/regist"));
-		//エラーメッセージが正しいか確認
-		final WebElement errorMsgElement = WebDriverUtils.webDriver
-				.findElement(By.cssSelector(".help-inline.error"));
-		String errorMsg = errorMsgElement.getText();
-		assertEquals("* 目標の達成度は半角数字で入力してください。", errorMsg);
+		assertTrue(currentUrl.startsWith("http://localhost:8080/lms/report/complete"));
+		//属性値が変化しているか確認
+		String classText = WebDriverUtils.webDriver.findElement(By.id("content_0")).getAttribute("class");
+		assertEquals("form-control errorInput", classText);
 		getEvidence(new Object() {
 		});
 	}
@@ -308,14 +305,14 @@ public class Case09 {
 		submitBtn.click();
 		//自画面遷移のためURLが変わっていないことを確認
 		String currentUrl = WebDriverUtils.webDriver.getCurrentUrl();
-		assertTrue(currentUrl.startsWith("http://localhost:8080/lms/report/regist"));
-		//エラーメッセージが正しいか確認
-		WebElement firstErrorMsgElement = WebDriverUtils.webDriver
-				.findElement(By.xpath("//input[@id=content_0]/sapan)"));
-		assertEquals("* 目標の達成度は必須です。", firstErrorMsgElement.getText());
-		WebElement secondErrorMsgElement = WebDriverUtils.webDriver
-				.findElement(By.xpath("//input[@id=content_1]/sapan)"));
-		assertEquals("* 所感は必須です。", secondErrorMsgElement.getText());
+		assertTrue(currentUrl.startsWith("http://localhost:8080/lms/report/complete"));
+		//目標の達成度の属性値が変化しているか確認
+		String achievementLevelClassText = WebDriverUtils.webDriver.findElement(By.id("content_0"))
+				.getAttribute("class");
+		assertEquals("form-control errorInput", achievementLevelClassText);
+		//所感の属性値が変化しているか確認
+		String impressionsClassText = WebDriverUtils.webDriver.findElement(By.id("content_1")).getAttribute("class");
+		assertEquals("form-control errorInput", impressionsClassText);
 		getEvidence(new Object() {
 		});
 	}
@@ -340,7 +337,7 @@ public class Case09 {
 		achievementLevel.clear();
 		achievementLevel.sendKeys("1");
 		achievementLevel.sendKeys(Keys.TAB);
-		//所感の入力が2000文字以上
+		//所感の入力が2001文字以上
 		impressions.clear();
 		impressions.sendKeys(
 				"0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ１２３４５６７８９"
@@ -386,9 +383,9 @@ public class Case09 {
 						+ "ＶＷＸＹＺあいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめ"
 						+ "もやゆよらりるれろわをんアイウエオカキクケコサシスセソタチツテトナニヌネノハヒ"
 						+ "フヘホマミムメモヤユヨラリルレロワヲン一二三四五六七八九①②③④⑤⑥⑦⑧⑨⑩!-"
-						+ "/:-@¥[-`{-0123456789abcdefgh");
+						+ "/:-@¥[-`{-0123456789abcdefghij");
 		impressions.sendKeys(Keys.TAB);
-		//1週間の振り返りの入力が2000文字以上
+		//1週間の振り返りの入力が2001文字以上
 		reviewOfTheWeek.clear();
 		reviewOfTheWeek.sendKeys(
 				"0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ１２３４５６７８９"
@@ -434,21 +431,20 @@ public class Case09 {
 						+ "ＶＷＸＹＺあいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめ"
 						+ "もやゆよらりるれろわをんアイウエオカキクケコサシスセソタチツテトナニヌネノハヒ"
 						+ "フヘホマミムメモヤユヨラリルレロワヲン一二三四五六七八九①②③④⑤⑥⑦⑧⑨⑩!-"
-						+ "/:-@¥[-`{-0123456789abcdefgh");
+						+ "/:-@¥[-`{-0123456789abcdefghij");
 		// 提出するボタンをクリック
 		WebElement submitBtn = WebDriverUtils.webDriver.findElement(By.className("btn-primary"));
 		submitBtn.click();
 		//自画面遷移のためURLが変わっていないことを確認
 		String currentUrl = WebDriverUtils.webDriver.getCurrentUrl();
-		assertTrue(currentUrl.startsWith("http://localhost:8080/lms/report/regist"));
-		//エラーメッセージが正しいか確認
-		//エラーメッセージが正しいか確認
-		WebElement firstErrorMsgElement = WebDriverUtils.webDriver
-				.findElement(By.xpath("//input[@id=content_1]/sapan)"));
-		assertEquals("* 所感の長さが最大値200を超えています。", firstErrorMsgElement.getText());
-		WebElement secondErrorMsgElement = WebDriverUtils.webDriver
-				.findElement(By.xpath("//input[@id=content_2]/sapan)"));
-		assertEquals("* 1週間の振り返りの長さが最大値200を超えています。", secondErrorMsgElement.getText());
+		assertTrue(currentUrl.startsWith("http://localhost:8080/lms/report/complete"));
+		//所感の属性値が変化しているか確認
+		String impressionsClassText = WebDriverUtils.webDriver.findElement(By.id("content_1")).getAttribute("class");
+		assertEquals("form-control errorInput", impressionsClassText);
+		//1週間の振り返りの属性値が変化しているか確認
+		String reviewOfTheWeekClassText = WebDriverUtils.webDriver.findElement(By.id("content_2"))
+				.getAttribute("class");
+		assertEquals("form-control errorInput", reviewOfTheWeekClassText);
 		getEvidence(new Object() {
 		});
 	}
