@@ -3,8 +3,6 @@ package jp.co.sss.lms.ct.f03_report;
 import static jp.co.sss.lms.ct.util.WebDriverUtils.*;
 import static org.junit.Assert.*;
 
-import java.util.List;
-
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -315,13 +313,12 @@ public class Case09 {
 		String currentUrl = WebDriverUtils.webDriver.getCurrentUrl();
 		assertTrue(currentUrl.startsWith("http://localhost:8080/lms/report/regist"));
 		//エラーメッセージが正しいか確認
-		WebElement errorMsg = WebDriverUtils.webDriver.findElement(By.cssSelector(".help-inline.error"));
-		List<WebElement> errorMsgList = errorMsg.findElements(By.tagName("sapn"));
-		WebElement firstErrorMsg = errorMsgList.get(0);
-		WebElement secondErrorMsg = errorMsgList.get(1);
-		assertEquals("* 目標の達成度は必須です。", firstErrorMsg.getText());
-
-		assertEquals("* 所感は必須です。", secondErrorMsg.getText());
+		WebElement firstErrorMsgElement = WebDriverUtils.webDriver
+				.findElement(By.xpath("//input[@id=content_0]/sapan)"));
+		assertEquals("* 目標の達成度は必須です。", firstErrorMsgElement.getText());
+		WebElement secondErrorMsgElement = WebDriverUtils.webDriver
+				.findElement(By.xpath("//input[@id=content_1]/sapan)"));
+		assertEquals("* 所感は必須です。", secondErrorMsgElement.getText());
 		getEvidence(new Object() {
 		});
 
@@ -349,11 +346,99 @@ public class Case09 {
 		achievementLevel.sendKeys(Keys.TAB);
 		//所感の入力が2000文字以上
 		impressions.clear();
-		impressions.sendKeys("テスト");
+		impressions.sendKeys(
+				"0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ１２３４５６７８９"
+						+ "ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚＡＢＣＤＥＦＧＨＩＪＫＬＭ"
+						+ "ＮＯＰＱＲＳＴＵＶＷＸＹＺあいうえおかきくけこさしすせそたちつてとなにぬねのは"
+						+ "ひふへほまみむめもやゆよらりるれろわをんアイウエオカキクケコサシスセソタチツテ"
+						+ "トナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン一二三四五六七八九十①②"
+						+ "③④⑤⑥⑦⑧⑨⑩!-/:-@¥[-`{-~]*$0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJ"
+						+ "KLMNOPQRSTUVWXYZ１２３４５６７８９ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖ"
+						+ "ｗｘｙｚＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺあいうえおかきくけ"
+						+ "こさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをんアイ"
+						+ "ウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリル"
+						+ "レロワヲン一二三四五六七八九十①②③④⑤⑥⑦⑧⑨⑩!-/:-@¥[-`{~]*$0123456789abc"
+						+ "defghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ１２３４５６７８９ａｂｃｄｅ"
+						+ "ｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲ"
+						+ "ＳＴＵＶＷＸＹＺあいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほま"
+						+ "みむめもやゆよらりるれろわをんアイウエオカキクケコサシスセソタチツテトナニヌネ"
+						+ "ノハヒフヘホマミムメモヤユヨラリルレロワヲン一二三四五六七八①②③④⑤⑥⑦⑧⑨"
+						+ "⑩!-/:-@¥[-`{-]*$0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXY"
+						+ "Z１２３４５６７８９ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚＡＢＣ"
+						+ "ＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺあいうえおかきくけこさしすせそた"
+						+ "ちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをんアイウエオカキクケ"
+						+ "コサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン一二"
+						+ "三四五六七八九①②③④⑤⑥⑦⑧⑨⑩!-/:-@¥0123456789abcdefghijklmnopqrstuvwxyzA"
+						+ "BCDEFGHIJKLMNOPQRSTUVWXYZ１２３４５６７８９ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑ"
+						+ "ｒｓｔｕｖｗｘｙｚＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺあいうえ"
+						+ "おかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろ"
+						+ "わをんアイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤ"
+						+ "ユヨラリルレロワヲン一二三四五六七八九十①②③④⑤⑥⑦⑧⑨⑩!-/:-@¥[-~]*$01234"
+						+ "56789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ１２３４５６７８９ａ"
+						+ "ｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚＡＢＣＤＥＦＧＨＩＪＫＬＭＮ"
+						+ "ＯＰＱＲＳＴＵＶＷＸＹＺあいうえおかきくけこさしすせそたちつてとなにぬねのはひ"
+						+ "ふへほまみむめもやゆよらりるれろわをんアイウエオカキクケコサシスセソタチツテト"
+						+ "ナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン一二三四五六七八九①②③④"
+						+ "⑤⑥⑦⑧⑨⑩!-/:-@¥[-~]*$0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQ"
+						+ "RSTUVWXYZ１２３４５６７８９ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙ"
+						+ "ｚＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺあいうえおかきくけこさし"
+						+ "すせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをんアイウエオ"
+						+ "カキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワ"
+						+ "ヲン一二三四五六七八九十①②③④⑤⑥⑦⑧⑨⑩!-/:-@¥[-`{~]*$0123456789abcdefghi"
+						+ "jklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ１２３４５６７８９ａｂｃｄｅｆｇｈ"
+						+ "ｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵ"
+						+ "ＶＷＸＹＺあいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめ"
+						+ "もやゆよらりるれろわをんアイウエオカキクケコサシスセソタチツテトナニヌネノハヒ"
+						+ "フヘホマミムメモヤユヨラリルレロワヲン一二三四五六七八九①②③④⑤⑥⑦⑧⑨⑩!-"
+						+ "/:-@¥[-`{-0123456789abcdefgh");
 		impressions.sendKeys(Keys.TAB);
 		//1週間の振り返りの入力が2000文字以上
 		reviewOfTheWeek.clear();
-		reviewOfTheWeek.sendKeys("テスト");
+		reviewOfTheWeek.sendKeys(
+				"0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ１２３４５６７８９"
+						+ "ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚＡＢＣＤＥＦＧＨＩＪＫＬＭ"
+						+ "ＮＯＰＱＲＳＴＵＶＷＸＹＺあいうえおかきくけこさしすせそたちつてとなにぬねのは"
+						+ "ひふへほまみむめもやゆよらりるれろわをんアイウエオカキクケコサシスセソタチツテ"
+						+ "トナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン一二三四五六七八九十①②"
+						+ "③④⑤⑥⑦⑧⑨⑩!-/:-@¥[-`{-~]*$0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJ"
+						+ "KLMNOPQRSTUVWXYZ１２３４５６７８９ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖ"
+						+ "ｗｘｙｚＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺあいうえおかきくけ"
+						+ "こさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをんアイ"
+						+ "ウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリル"
+						+ "レロワヲン一二三四五六七八九十①②③④⑤⑥⑦⑧⑨⑩!-/:-@¥[-`{~]*$0123456789abc"
+						+ "defghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ１２３４５６７８９ａｂｃｄｅ"
+						+ "ｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲ"
+						+ "ＳＴＵＶＷＸＹＺあいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほま"
+						+ "みむめもやゆよらりるれろわをんアイウエオカキクケコサシスセソタチツテトナニヌネ"
+						+ "ノハヒフヘホマミムメモヤユヨラリルレロワヲン一二三四五六七八①②③④⑤⑥⑦⑧⑨"
+						+ "⑩!-/:-@¥[-`{-]*$0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXY"
+						+ "Z１２３４５６７８９ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚＡＢＣ"
+						+ "ＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺあいうえおかきくけこさしすせそた"
+						+ "ちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをんアイウエオカキクケ"
+						+ "コサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン一二"
+						+ "三四五六七八九①②③④⑤⑥⑦⑧⑨⑩!-/:-@¥0123456789abcdefghijklmnopqrstuvwxyzA"
+						+ "BCDEFGHIJKLMNOPQRSTUVWXYZ１２３４５６７８９ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑ"
+						+ "ｒｓｔｕｖｗｘｙｚＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺあいうえ"
+						+ "おかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろ"
+						+ "わをんアイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤ"
+						+ "ユヨラリルレロワヲン一二三四五六七八九十①②③④⑤⑥⑦⑧⑨⑩!-/:-@¥[-~]*$01234"
+						+ "56789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ１２３４５６７８９ａ"
+						+ "ｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚＡＢＣＤＥＦＧＨＩＪＫＬＭＮ"
+						+ "ＯＰＱＲＳＴＵＶＷＸＹＺあいうえおかきくけこさしすせそたちつてとなにぬねのはひ"
+						+ "ふへほまみむめもやゆよらりるれろわをんアイウエオカキクケコサシスセソタチツテト"
+						+ "ナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン一二三四五六七八九①②③④"
+						+ "⑤⑥⑦⑧⑨⑩!-/:-@¥[-~]*$0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQ"
+						+ "RSTUVWXYZ１２３４５６７８９ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙ"
+						+ "ｚＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺあいうえおかきくけこさし"
+						+ "すせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをんアイウエオ"
+						+ "カキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワ"
+						+ "ヲン一二三四五六七八九十①②③④⑤⑥⑦⑧⑨⑩!-/:-@¥[-`{~]*$0123456789abcdefghi"
+						+ "jklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ１２３４５６７８９ａｂｃｄｅｆｇｈ"
+						+ "ｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵ"
+						+ "ＶＷＸＹＺあいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめ"
+						+ "もやゆよらりるれろわをんアイウエオカキクケコサシスセソタチツテトナニヌネノハヒ"
+						+ "フヘホマミムメモヤユヨラリルレロワヲン一二三四五六七八九①②③④⑤⑥⑦⑧⑨⑩!-"
+						+ "/:-@¥[-`{-0123456789abcdefgh");
 		// 提出するボタンをクリック
 		WebElement submitBtn = WebDriverUtils.webDriver.findElement(By.className("btn-primary"));
 		submitBtn.click();
@@ -361,13 +446,13 @@ public class Case09 {
 		String currentUrl = WebDriverUtils.webDriver.getCurrentUrl();
 		assertTrue(currentUrl.startsWith("http://localhost:8080/lms/report/regist"));
 		//エラーメッセージが正しいか確認
-		WebElement errorMsg = WebDriverUtils.webDriver.findElement(By.cssSelector(".help-inline.error"));
-		List<WebElement> errorMsgList = errorMsg.findElements(By.tagName("sapn"));
-		WebElement firstErrorMsg = errorMsgList.get(0);
-		WebElement secondErrorMsg = errorMsgList.get(1);
-		assertEquals("* 所感の長さが最大値200を超えています。", firstErrorMsg.getText());
-
-		assertEquals("* 1週間の振り返りの長さが最大値200を超えています。", secondErrorMsg.getText());
+		//エラーメッセージが正しいか確認
+		WebElement firstErrorMsgElement = WebDriverUtils.webDriver
+				.findElement(By.xpath("//input[@id=content_1]/sapan)"));
+		assertEquals("* 所感の長さが最大値200を超えています。", firstErrorMsgElement.getText());
+		WebElement secondErrorMsgElement = WebDriverUtils.webDriver
+				.findElement(By.xpath("//input[@id=content_2]/sapan)"));
+		assertEquals("* 1週間の振り返りの長さが最大値200を超えています。", secondErrorMsgElement.getText());
 
 		getEvidence(new Object() {
 		});
