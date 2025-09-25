@@ -153,7 +153,6 @@ public class Case08 {
 		//1週間の振り返りの入力
 		reviewOfTheWeek.clear();
 		reviewOfTheWeek.sendKeys("テスト");
-		reviewOfTheWeek.sendKeys(Keys.ENTER);
 		// 提出するボタンをクリック
 		WebElement submitBtn = WebDriverUtils.webDriver.findElement(By.className("btn-primary"));
 		submitBtn.click();
