@@ -192,7 +192,6 @@ public class Case09 {
 		assertEquals("* 学習項目を入力した場合は、理解度は必須です。", errorMsg);
 		getEvidence(new Object() {
 		});
-
 	}
 
 	@Test
@@ -235,7 +234,6 @@ public class Case09 {
 		assertEquals("* 目標の達成度は半角数字で入力してください。", errorMsg);
 		getEvidence(new Object() {
 		});
-
 	}
 
 	@Test
@@ -278,7 +276,6 @@ public class Case09 {
 		assertEquals("* 目標の達成度は半角数字で入力してください。", errorMsg);
 		getEvidence(new Object() {
 		});
-
 	}
 
 	@Test
@@ -321,7 +318,6 @@ public class Case09 {
 		assertEquals("* 所感は必須です。", secondErrorMsgElement.getText());
 		getEvidence(new Object() {
 		});
-
 	}
 
 	@Test
@@ -453,10 +449,7 @@ public class Case09 {
 		WebElement secondErrorMsgElement = WebDriverUtils.webDriver
 				.findElement(By.xpath("//input[@id=content_2]/sapan)"));
 		assertEquals("* 1週間の振り返りの長さが最大値200を超えています。", secondErrorMsgElement.getText());
-
 		getEvidence(new Object() {
 		});
-
 	}
-
 }
