@@ -113,7 +113,6 @@ public class Case07 {
 	@Order(4)
 	@DisplayName("テスト04 「提出する」ボタンを押下しレポート登録画面に遷移")
 	void test04() {
-
 		//提出するボタンが更新されていないか確認
 		WebElement submitButton = WebDriverUtils.webDriver
 				.findElement(By.xpath("//*[@class='btn btn-default']"));
